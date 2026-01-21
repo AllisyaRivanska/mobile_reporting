@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_reporting/features/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ Widget build(BuildContext context) {
       useMaterial3: false,
     
     ),
-    // home: const HomePage(),
+    home: const SplashScreen(),
     );
 }
 
