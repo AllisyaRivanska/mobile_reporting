@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-// import 'package:mobile_reporting/constant/bottom_bar/bottom_main.dart';
-import 'package:mobile_reporting/features/home/home_page.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mobile_reporting/constant/bottom_bar/bottom_main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 5), () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const BottomMain()),
       );
     });
   }
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/icons/logo-unpam.png',
+            SvgPicture.asset('assets/icons/logo-unpam.svg',
             width: 150,
     ),
 

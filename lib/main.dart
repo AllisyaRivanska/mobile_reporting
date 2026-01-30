@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
 import 'package:mobile_reporting/features/splash/splash_screen.dart';
 
 void main() {
@@ -11,7 +13,12 @@ class MyApp extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HomeBloc()),
+      ],
+
+    child: MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       textTheme: GoogleFonts.poppinsTextTheme(),
@@ -19,6 +26,7 @@ Widget build(BuildContext context) {
     
     ),
     home: const SplashScreen(),
+    ),
     );
 }
 
