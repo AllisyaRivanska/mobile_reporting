@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -14,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final String? label;
   final String? errorText;
   final List<TextInputFormatter>? inputFormatters;
+  final Color? fillColor;
 
   const CustomTextField({
     super.key,
@@ -29,6 +32,7 @@ class CustomTextField extends StatelessWidget {
     this.label,
     this.errorText,
     this.inputFormatters,
+    this.fillColor,
   });
 
   @override
@@ -55,23 +59,26 @@ class CustomTextField extends StatelessWidget {
             validator: validator,
             decoration: decoration ??
                 InputDecoration(
+                filled: true,
+                fillColor: fillColor ?? Colors.white,
                 hintText: hintText,
                 hintStyle: TextConfig.inputHint,
                 suffixIcon: suffixIcon,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
+                  
                   borderSide: BorderSide(
                     color: (errorText != null && errorText!.isNotEmpty) 
                         ? Colors.red 
-                        : ColorConstant.kontrakanTitle,
+                        : ColorConstant.hintGrey,
                     width: 1,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
-                    color: ColorConstant.kontrakinColor, 
+                    color: ColorConstant.primaryColor, 
                     width: 2,
                   ),
                 ),
