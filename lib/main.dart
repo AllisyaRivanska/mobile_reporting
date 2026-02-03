@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
 import 'package:mobile_reporting/features/splash/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
+import 'package:mobile_reporting/features/login/cubit/login_bloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -165,6 +165,9 @@ Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => HomeBloc()),
+        BlocProvider(create: (_) => LoginBloc()),
+
+
       ],
 
     child: MaterialApp(
@@ -175,9 +178,8 @@ Widget build(BuildContext context) {
     
     ),
     home: const SplashScreen(),
+    
     ),
     );
 }
-
-
 }
