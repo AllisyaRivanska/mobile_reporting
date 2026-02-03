@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: const Color.fromARGB(255, 40, 138, 236),
+          backgroundColor: ColorConstant.primaryColor,
           elevation: 0,
           titleSpacing: 0,
           title: Padding(
@@ -128,12 +129,12 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFFD9E9FF),
+          color: ColorConstant.creamCard,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            const Icon(Icons.notifications, color: Color(0xFF288AEC), size: 30),
+            const Icon(Icons.notifications, color: ColorConstant.primaryColor, size: 30),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -156,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                         child: const Text(
                           "Lihat Detail →",
                           style: TextStyle(
-                            color: Color(0xFF288AEC),
+                            color: ColorConstant.primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
