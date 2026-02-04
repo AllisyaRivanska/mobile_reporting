@@ -38,13 +38,15 @@ class _LoginPageState extends State<LoginPage> {
 
         if (state is LoginSuccess) {
           Navigator.pop(context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+             content: Text("Selamat Datang, ${state.data.data?.user?.name}"),
+            ),
+          );
           Navigator.pushReplacement(
             context, 
             MaterialPageRoute(builder: (context) => const BottomMain()),
-          );
-            ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Selamat Datang, ${state.data.data?.user?.name}")),
-
           );
         }
 
