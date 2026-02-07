@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/features/home/home_page.dart';
+import 'package:mobile_reporting/features/reporting/presentation/history_page.dart';
 import 'package:mobile_reporting/features/reporting/presentation/reporting_page.dart';
 
 class BottomMain extends StatefulWidget {
@@ -17,7 +18,7 @@ class _BottomMainState extends State<BottomMain> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const Center(child: Text('Riwayat')),
+    const HistoryPage(),
     const ReportingPage(),
   ];
 
@@ -59,7 +60,8 @@ class _BottomMainState extends State<BottomMain> {
               label: 'Beranda', style: TextConfig.labelBoldSmall,
               isSelected: _currentIndex == 0,
             ),
-             _buildNavItem(index: 1,
+             _buildNavItem(
+              index: 1,
               icon: Icon(Icons.history, size: 26), 
               label: 'Riwayat', style: TextConfig.labelIcon,
               isSelected: _currentIndex == 1),
