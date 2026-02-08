@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 // import 'package:mobile_reporting/constant/bottom_bar/bottom_main.dart';
 //import 'package:mobile_reporting/features/home/home_page.dart';
-import 'package:mobile_reporting/features/login/login_page.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/features/login/presentation/login_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 200, 224, 236),
+      backgroundColor: ColorConstant.lightBlue,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

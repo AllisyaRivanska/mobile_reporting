@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
+import 'package:mobile_reporting/constant/widgets/custom_text_field.dart';
 // import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/features/login/cubit/login_bloc.dart';
 import 'package:mobile_reporting/features/login/cubit/login_state.dart';
@@ -13,14 +16,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
   bool _isPasswordHidden = true;
 
   @override
   void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -48,6 +51,10 @@ class _LoginPageState extends State<LoginPage> {
             context, 
             MaterialPageRoute(builder: (context) => const BottomMain()),
           );
+            ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Selamat Datang, ${state.data.data?.user?.name}",)),
+
+          );
         }
 
         if (state is LoginError) {
@@ -60,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         body: Stack(
-          children: <Widget>[
+          children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.45,
               width: double.infinity,
@@ -87,38 +94,29 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       const Text(
                         "Selamat Datang!",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextConfig.loginTitle,
                       ),
                       const SizedBox(height: 5),
                       const Text(
-                        "Silahkan Masuk untuk melanjutkan",
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        "Silakan Masuk untuk Melanjutkan",
+                        style: TextConfig.loginSubTitle,
                       ),
                       const SizedBox(height: 35),
                       _buildInputLabel("Username"),
                       const SizedBox(height: 8),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
+                      CustomTextField(
+                        controller: usernameController,
                           hintText: "Masukan Username",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-                        ),
-                      ),
+                      ),  
+                        
+                      
                       const SizedBox(height: 20),
                       _buildInputLabel("Kata Sandi"),
                       const SizedBox(height: 8),
-                      TextField(
-                        controller: _passwordController,
+                      CustomTextField(
+                        controller: passwordController,
                         obscureText: _isPasswordHidden,
-                        decoration: InputDecoration(
                           hintText: "Masukan Kata Sandi",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isPasswordHidden ? Icons.visibility_off : Icons.visibility,
@@ -129,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             },
                           ),
-                        ),
+                        
                       ),
                       Align(
                         alignment: Alignment.centerRight,
@@ -137,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {},
                           child: const Text(
                             "Lupa Kata Sandi?",
-                            style: TextStyle(fontSize: 12, color: Colors.blue),
+                            style: TextConfig.labelBoldSmall,
                           ),
                         ),
                       ),
@@ -147,15 +145,15 @@ class _LoginPageState extends State<LoginPage> {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF2E59D9),
+                            backgroundColor: ColorConstant.primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                             elevation: 0,
                           ),
                           onPressed: () {
-                            final email = _usernameController.text;
-                            final pass = _passwordController.text;
+                            final email = usernameController.text;
+                            final pass = passwordController.text;
                             
                             if(email.isNotEmpty && pass.isNotEmpty) {
                               context.read<LoginBloc>().login(email, pass);
@@ -167,11 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: const Text(
                             "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextConfig.textButton,
                           ),
                         ),
                       ),
@@ -193,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 25),
                       const Text(
                         "Kebijakan Privasi",
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        style: TextConfig.loginFooter,
                       ),
                     ],
                   ),
@@ -211,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerLeft,
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        style: TextConfig.labelForm,
       ),
     );
   }

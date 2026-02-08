@@ -12,8 +12,35 @@ class LoginBloc extends Cubit<LoginState> {
     emit(LoginLoading());
 
     try {
-      
-      //=========NANTI KALO API HIDUP=============
+      // Dummy duls
+      const String dummyEmail = "Mahasiswa gothic";
+      const String dummyPassword = "melankolis123";
+      if (email == dummyEmail && password == dummyPassword) {
+      final dummyResponse = {
+        "success": true,
+        "message": "Login berhasil",
+        "data": {
+          "access_token": "dummy_token",
+          "token_type": "Bearer",
+          "user": {
+            "id": 1,
+            "name": "Mahasiswa gothic",
+            "email": email,
+            "role": "mahasiswa"
+          }
+        }
+      };
+
+      final result = LoginModel.fromJson(dummyResponse);
+      emit(LoginSuccess(result));
+
+      return;
+    } 
+    else {
+      emit(LoginError('Email atau password salah'));
+    }
+          
+      //NANTI KALO API HIDUP
       
       // final response = await dio.post(
       //   'https://api-example.com/login',
@@ -26,26 +53,6 @@ class LoginBloc extends Cubit<LoginState> {
       // final result = LoginModel.fromJson(response.data);
       //
 
-      // Dummy duls
-      final dummyResponse = {
-        "success": true,
-        "message": "Login berhasil",
-        "data": {
-          "access_token": "dummy_token",
-          "token_type": "Bearer",
-          "user": {
-            "id": 1,
-            "name": "Mahasiswa gothic",
-            "pasword": "melankolis123",
-            "email": email,
-            "role": "mahasiswa"
-          }
-        }
-      };
-
-      final result = LoginModel.fromJson(dummyResponse);
-
-      emit(LoginSuccess(result));
     } catch (e) {
       emit(LoginError(e.toString()));
     }
