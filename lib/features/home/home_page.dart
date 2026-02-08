@@ -5,6 +5,8 @@ import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
 import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
 import 'package:mobile_reporting/features/reporting/presentation/detail_page.dart';
+import 'package:mobile_reporting/features/profile/presentation/profile_menu_page.dart';
+import 'package:mobile_reporting/features/notification/notification_page.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
 
@@ -59,20 +61,36 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationPage(),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.notifications,
                 color: Colors.yellow,
                 size: 28,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(right: 16),
-              child: CircleAvatar(
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context:context,
+                    barrierColor: Colors.transparent,
+                      builder: (context) => const ProfileMenuPage(),
+                    );
+                },
+                child: CircleAvatar(
                 radius: 20,
                 backgroundColor: Colors.white30,
                 backgroundImage: AssetImage('assets/icons/logo-unpam.png'),
               ),
+            ),
             ),
           ],
         ),
