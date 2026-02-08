@@ -14,7 +14,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String prodi = "Teknik Nuklir S1";
   String kelas = "03SIFE006";
   String email = "melankolis123@gmail.com";
-  String photoUrl = "https://via.placeholder.com/150";
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
               backgroundColor: const Color(0xFF67B0D1),
               child: CircleAvatar(
                 radius: 60,
-                backgroundImage: NetworkImage(photoUrl),
+                backgroundImage: AssetImage('assets/images/logo-unpam.png'),
               ),
             ),
             const SizedBox(height: 30),

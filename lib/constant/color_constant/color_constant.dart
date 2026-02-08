@@ -9,9 +9,11 @@ class ColorConstant {
   static const Color darkBlue = Color(0xFF2D5389);
   static const Color darkGreen = Color(0xFF18874C);
   static const Color errorColor = Color(0xffB3261E);
-  static const Color lighterGreen = Color(0xFFD1EAD9);
+  static const Color warningButton = Color(0xFFE14F47);
+  static const Color lightGreen = Color(0xFFD1EAD9);
   static const Color emeraldGreen =Color(0xFF067041);
   static const Color hintGrey = Color(0xFF9E9E9E);
-
+  static const Color cameraColor = Color(0xFFD6E4FF);
+  static const Color backgroundTransparent = Color(0x80000000);
 
 }

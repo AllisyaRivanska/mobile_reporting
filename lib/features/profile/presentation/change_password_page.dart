@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mobile_reporting/features/login/presentation/login_page.dart';
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
@@ -9,7 +9,7 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final newPasswordController = TextEditingController();
-  final confirmPasswordController =TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   bool obscureNewPassword = true;
   bool obscureConfirmPassword = true;
@@ -19,6 +19,89 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     newPasswordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
+  }
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Berhasil!!',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Password anda telah terupdate',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, color: Colors.black87),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LoginPage()),
+                            (route) => false,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFD35D5D),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text(
+                          'Oke',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: -30,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF27AE60),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -34,10 +117,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ),
         title: const Text(
           'Ganti Kata Sandi',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -49,47 +129,40 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               controller: newPasswordController,
               hint: 'Kata Sandi Baru',
               obscure: obscureNewPassword,
-              onToggle: () {
-                setState(() {
-                  obscureNewPassword = !obscureNewPassword;
-                });
-              },
+              onToggle: () => setState(() => obscureNewPassword = !obscureNewPassword),
             ),
             const SizedBox(height: 12),
             _passwordField(
               controller: confirmPasswordController,
               hint: 'Konfirmasi Kata Sandi',
               obscure: obscureConfirmPassword,
-              onToggle: () {
-                setState(() {
-                  obscureConfirmPassword = !obscureConfirmPassword;
-                });
-              },
+              onToggle: () => setState(() => obscureConfirmPassword = !obscureConfirmPassword),
             ),
-
             const Spacer(),
-
             SizedBox(
               width: double.infinity,
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  // nanti isi logic
-                  // print(newPasswordController.text);
-                  // print(confirmPasswordController.text);
+                  if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Harap isi semua kolom!")),
+                    );
+                  } else if (newPasswordController.text != confirmPasswordController.text) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Konfirmasi password tidak cocok!")),
+                    );
+                  } else {
+                    _showSuccessDialog();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF2168E3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
                 child: const Text(
                   'Simpan Perubahan',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
                 ),
               ),
             ),
@@ -102,16 +175,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: OutlinedButton.styleFrom(
                   backgroundColor: const Color(0xFFEAF1FF),
                   side: const BorderSide(color: Color(0xFF2168E3)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
                 child: const Text(
                   'Batal',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

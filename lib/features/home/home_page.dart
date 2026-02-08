@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
+import 'package:mobile_reporting/features/reporting/presentation/detail_page.dart';
 import 'package:mobile_reporting/features/profile/presentation/profile_menu_page.dart';
+import 'package:mobile_reporting/features/notification/notification_page.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
 
@@ -45,15 +48,11 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     Text(
                       'Campus Report',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: TextConfig.headerHomePage,
                     ),
                     Text(
                       'Universitas Pamulang',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                      style: TextConfig.subHeaderHomePage,
                     ),
                   ],
                 ),
@@ -62,7 +61,14 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationPage(),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.notifications,
                 color: Colors.yellow,
@@ -115,13 +121,13 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 5),
                     const Text(
                       'Belum Ada Laporan',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextConfig.textIcon,
                     ),
                     const SizedBox(height: 3),
                     const Text(
                       'Laporkan masalah yang kamu temui \ndi sekitar kampus',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15),
+                      style: TextConfig.subTextIcon,
                     ),
                   ],
                 ),
@@ -153,24 +159,23 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Text(
                     "Laporanmu (17 Jan 2026) sedang di proses",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextConfig.information,
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
                       const Text(
                         "Diperbarui 2 jam lalu  •  ",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextConfig.subInformation,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => const DetailPage()));
+                        },
                         child: const Text(
                           "Lihat Detail →",
-                          style: TextStyle(
-                            color: ColorConstant.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                          style: TextConfig.seeDetailHomePage
                         ),
                       ),
                     ],

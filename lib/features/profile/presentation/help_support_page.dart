@@ -38,7 +38,6 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
               title: 'Cara membuat laporan',
               subtitle: 'langkah-langkah melaporkan kendala di kampus',
               onTap: () {
-                // Navigasi ke tutorial
               },
             ),
             const SizedBox(height: 16),
@@ -80,7 +79,6 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
         ),
         child: Row(
           children: [
-            // Container Icon dengan styling
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -94,7 +92,6 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
               ),
             ),
             const SizedBox(width: 16),
-            // Teks Deskripsi
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
