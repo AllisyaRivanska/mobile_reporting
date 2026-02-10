@@ -57,8 +57,8 @@ class _BottomMainState extends State<BottomMain> {
                           index: 0,
                           icon: SvgPicture.asset(
                             'assets/icons/icon-home-new.svg',
-                            width: responsive.navFabIconSize,
-                            height: responsive.navFabIconSize,
+                            width: responsive.navIconSize,
+                            height: responsive.navIconSize,
                             colorFilter: _currentIndex == 0
                                 ? const ColorFilter.mode(
                                     Colors.white,
@@ -79,7 +79,7 @@ class _BottomMainState extends State<BottomMain> {
                           index: 1,
                           icon: Icon(
                             Icons.history,
-                            size: responsive.navFabIconSize,
+                            size: responsive.navIconSize,
                             color: _currentIndex == 1
                                 ? Colors.white
                                 : Colors.grey,
@@ -157,7 +157,7 @@ class _BottomMainState extends State<BottomMain> {
               decoration: isSelected
                   ? BoxDecoration(
                       color: ColorConstant.primaryColor,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                     )
                   : null,
               child: icon,

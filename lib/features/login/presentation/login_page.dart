@@ -16,14 +16,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
   bool _isPasswordHidden = true;
 
   @override
   void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -41,6 +41,12 @@ class _LoginPageState extends State<LoginPage> {
 
         if (state is LoginSuccess) {
           Navigator.pop(context);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+             content: Text("Selamat Datang, ${state.data.data?.user?.name}"),
+            ),
+          );
           Navigator.pushReplacement(
             context, 
             MaterialPageRoute(builder: (context) => const BottomMain()),
@@ -61,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         body: Stack(
-          children: <Widget>[
+          children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.45,
               width: double.infinity,
@@ -99,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                       _buildInputLabel("Username"),
                       const SizedBox(height: 8),
                       CustomTextField(
-                        controller: _usernameController,
+                        controller: usernameController,
                           hintText: "Masukan Username",
                       ),  
                         
@@ -108,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       _buildInputLabel("Kata Sandi"),
                       const SizedBox(height: 8),
                       CustomTextField(
-                        controller: _passwordController,
+                        controller: passwordController,
                         obscureText: _isPasswordHidden,
                           hintText: "Masukan Kata Sandi",
                           suffixIcon: IconButton(
@@ -146,8 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                             elevation: 0,
                           ),
                           onPressed: () {
-                            final email = _usernameController.text;
-                            final pass = _passwordController.text;
+                            final email = usernameController.text;
+                            final pass = passwordController.text;
                             
                             if(email.isNotEmpty && pass.isNotEmpty) {
                               context.read<LoginBloc>().login(email, pass);

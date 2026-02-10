@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
+import 'package:mobile_reporting/features/reporting/presentation/detail_page.dart';
+import 'package:mobile_reporting/features/profile/presentation/profile_menu_page.dart';
+import 'package:mobile_reporting/features/notification/notification_page.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
 
@@ -44,15 +48,11 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     Text(
                       'Campus Report',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: TextConfig.headerHomePage,
                     ),
                     Text(
                       'Universitas Pamulang',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                      style: TextConfig.subHeaderHomePage,
                     ),
                   ],
                 ),
@@ -61,20 +61,36 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationPage(),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.notifications,
                 color: Colors.yellow,
                 size: 28,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(right: 16),
-              child: CircleAvatar(
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context:context,
+                    barrierColor: Colors.transparent,
+                      builder: (context) => const ProfileMenuPage(),
+                    );
+                },
+                child: CircleAvatar(
                 radius: 20,
                 backgroundColor: Colors.white30,
                 backgroundImage: AssetImage('assets/icons/logo-unpam.png'),
               ),
+            ),
             ),
           ],
         ),
@@ -94,44 +110,32 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          // Main content dengan SafeArea dan padding bottom untuk navbar
-          SafeArea(
-            bottom: true,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 85), // Disesuaikan dengan tinggi navbar
-              child: Builder(
-                builder: (context) {
-                  if (showFakeCard) {
-                    return ListView(
-                      children: [
-                        _buildReportCard(),
-                        // Tambah konten lain di sini jika ada
-                      ],
-                    );
-                  }
-                  
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset('assets/images/image_70.svg'),
-                        const SizedBox(height: 5),
-                        const Text(
-                          'Belum Ada Laporan',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 3),
-                        const Text(
-                          'Laporkan masalah yang kamu temui \ndi sekitar kampus',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
+          Builder(
+            builder: (context) {
+              if (showFakeCard) {
+                return _buildReportCard();
+              }
+              
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset('assets/images/image_70.svg'),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'Belum Ada Laporan',
+                      style: TextConfig.textIcon,
                     ),
-                  );
-                },
-              ),
-            ),
+                    const SizedBox(height: 3),
+                    const Text(
+                      'Laporkan masalah yang kamu temui \ndi sekitar kampus',
+                      textAlign: TextAlign.center,
+                      style: TextConfig.subTextIcon,
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -159,24 +163,23 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Text(
                     "Laporanmu (17 Jan 2026) sedang di proses",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextConfig.information,
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
                       const Text(
                         "Diperbarui 2 jam lalu  •  ",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextConfig.subInformation,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => const DetailPage()));
+                        },
                         child: const Text(
                           "Lihat Detail →",
-                          style: TextStyle(
-                            color: ColorConstant.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                          style: TextConfig.seeDetailHomePage
                         ),
                       ),
                     ],

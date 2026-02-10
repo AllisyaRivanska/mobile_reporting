@@ -12,19 +12,7 @@ class LoginBloc extends Cubit<LoginState> {
     emit(LoginLoading());
 
     try {
-      
-      //=========NANTI KALO API HIDUP=============
-      
-      // final response = await dio.post(
-      //   'https://api-example.com/login',
-      //   data: {
-      //     'email': email,
-      //     'password': password,
-      //   },
-      // );
-
-      // final result = LoginModel.fromJson(response.data);
-      //
+           
 
       final dummyResponse = {
         "success": true,
@@ -45,6 +33,7 @@ class LoginBloc extends Cubit<LoginState> {
       final result = LoginModel.fromJson(dummyResponse);
 
       emit(LoginSuccess(result));
+     
     } catch (e) {
       emit(LoginError(e.toString()));
     }

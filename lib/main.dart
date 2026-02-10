@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
+import 'package:mobile_reporting/features/reporting/cubit/reporting_bloc.dart';
 import 'package:mobile_reporting/features/splash/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:mobile_reporting/features/login/cubit/login_bloc.dart';
@@ -166,6 +167,7 @@ Widget build(BuildContext context) {
       providers: [
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => ReportingBloc()),
 
 
       ],

@@ -14,12 +14,12 @@ class CustomBackHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      color: ColorConstant.primaryColor,
-      child: SafeArea(
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        color: ColorConstant.primaryColor,
         child: Row(
-      children: [
+              children: [
         GestureDetector(
           onTap: onBack ?? () => Navigator.of(context).pop(),
           child: const Icon(Icons.arrow_back_ios, size: 25, color: Colors.white, fontWeight: FontWeight.bold,),
@@ -29,7 +29,7 @@ class CustomBackHeader extends StatelessWidget {
           title ?? '',
           style: TextConfig.titleHeader,
         ),
-      ],
+              ],
         ),
       ),
     );
