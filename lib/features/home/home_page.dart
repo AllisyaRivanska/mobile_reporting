@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
+import 'package:mobile_reporting/features/notification/notification_page.dart';
+import 'package:mobile_reporting/features/profile/presentation/profile_menu_page.dart';
+import 'package:mobile_reporting/features/reporting/presentation/detail_page.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
 
@@ -25,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
@@ -61,25 +65,34 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationPage()));
+              },
               icon: const Icon(
                 Icons.notifications,
                 color: Colors.yellow,
                 size: 28,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: CircleAvatar(
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute (builder: (context) => const ProfileMenuPage()));
+                },
+              
+              child: const CircleAvatar(
                 radius: 20,
                 backgroundColor: Colors.white30,
                 backgroundImage: AssetImage('assets/icons/logo-unpam.png'),
               ),
             ),
+            ),
           ],
         ),
       ),
-      body: Stack(
+      body: 
+      Stack(
         children: [
           // Background logo
           Positioned.fill(
@@ -168,7 +181,9 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailPage()));
+                        },
                         child: const Text(
                           "Lihat Detail →",
                           style: TextStyle(

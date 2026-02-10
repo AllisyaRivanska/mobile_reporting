@@ -82,11 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 35,
-                  ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       const Text(
@@ -98,17 +95,17 @@ class _LoginPageState extends State<LoginPage> {
                         "Silakan Masuk untuk Melanjutkan",
                         style: TextConfig.loginSubTitle,
                       ),
-                      const SizedBox(height: 35),
+                      const SizedBox(height: 30),
                       _buildInputLabel("Username"),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 4),
                       CustomTextField(
                         controller: usernameController,
                         hintText: "Masukan Username",
                       ),
-
+                  
                       const SizedBox(height: 20),
                       _buildInputLabel("Kata Sandi"),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 4),
                       CustomTextField(
                         controller: passwordController,
                         obscureText: _isPasswordHidden,
@@ -151,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             final email = usernameController.text;
                             final pass = passwordController.text;
-
+                  
                             if (email.isNotEmpty && pass.isNotEmpty) {
                               context.read<LoginBloc>().login(email, pass);
                             } else {
@@ -168,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -176,14 +173,14 @@ class _LoginPageState extends State<LoginPage> {
                             'assets/icons/logo-sasmita.png',
                             height: 40,
                           ),
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 10),
                           Image.asset(
                             'assets/icons/logo-unpam.png',
                             height: 40,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 15),
                       const Text(
                         "Kebijakan Privasi",
                         style: TextConfig.loginFooter,

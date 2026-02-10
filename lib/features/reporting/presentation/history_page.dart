@@ -21,7 +21,7 @@ class _HistoryPageState extends State<HistoryPage> {
       backgroundColor: ColorConstant.lightBlue,
       body: Column(
         children: [
-          CustomBackHeader(title: 'Riwayat Laporan'),
+          CustomBackHeader(title: 'Riwayat Laporan', backIcon: false),
           
           Expanded(
             child: isEmpty 
