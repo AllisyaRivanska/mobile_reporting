@@ -35,25 +35,22 @@ class _LoginPageState extends State<LoginPage> {
           showDialog(
             context: context,
             barrierDismissible: false,
-            builder: (context) => const Center(child: CircularProgressIndicator()),
+            builder: (context) =>
+                const Center(child: CircularProgressIndicator()),
           );
         }
 
         if (state is LoginSuccess) {
           Navigator.pop(context);
 
-          ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-             content: Text("Selamat Datang, ${state.data.data?.user?.name}"),
-            ),
-          );
           Navigator.pushReplacement(
-            context, 
+            context,
             MaterialPageRoute(builder: (context) => const BottomMain()),
           );
-            ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Selamat Datang, ${state.data.data?.user?.name}",)),
-
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Selamat Datang, ${state.data.data?.user?.name}"),
+            ),
           );
         }
 
@@ -71,10 +68,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.45,
               width: double.infinity,
-              child: Image.asset(
-                'assets/images/victor.png',
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset('assets/images/victor.png', fit: BoxFit.cover),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -89,7 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 35),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 35,
+                  ),
                   child: Column(
                     children: [
                       const Text(
@@ -106,28 +103,28 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 8),
                       CustomTextField(
                         controller: usernameController,
-                          hintText: "Masukan Username",
-                      ),  
-                        
-                      
+                        hintText: "Masukan Username",
+                      ),
+
                       const SizedBox(height: 20),
                       _buildInputLabel("Kata Sandi"),
                       const SizedBox(height: 8),
                       CustomTextField(
                         controller: passwordController,
                         obscureText: _isPasswordHidden,
-                          hintText: "Masukan Kata Sandi",
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isPasswordHidden ? Icons.visibility_off : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isPasswordHidden = !_isPasswordHidden;
-                              });
-                            },
+                        hintText: "Masukan Kata Sandi",
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordHidden
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
-                        
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordHidden = !_isPasswordHidden;
+                            });
+                          },
+                        ),
                       ),
                       Align(
                         alignment: Alignment.centerRight,
@@ -154,12 +151,14 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             final email = usernameController.text;
                             final pass = passwordController.text;
-                            
-                            if(email.isNotEmpty && pass.isNotEmpty) {
+
+                            if (email.isNotEmpty && pass.isNotEmpty) {
                               context.read<LoginBloc>().login(email, pass);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Isi semua field!")),
+                                const SnackBar(
+                                  content: Text("Isi semua field!"),
+                                ),
                               );
                             }
                           },
@@ -203,10 +202,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildInputLabel(String text) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Text(
-        text,
-        style: TextConfig.labelForm,
-      ),
+      child: Text(text, style: TextConfig.labelForm),
     );
   }
 }

@@ -12,22 +12,11 @@ class LoginBloc extends Cubit<LoginState> {
     emit(LoginLoading());
 
     try {
-           
-
+    
       final dummyResponse = {
-        "success": true,
-        "message": "Login berhasil",
-        "data": {
-          "access_token": "dummy_token",
-          "token_type": "Bearer",
-          "user": {
-            "id": 1,
-            "name": email,
-            "pasword": password,
-            "email": email,
-            "role": "mahasiswa"
-          }
-        }
+      "email": email,
+      "password": password,
+      "name": email
       };
 
       final result = LoginModel.fromJson(dummyResponse);
