@@ -81,42 +81,57 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          Center(
-            child: Opacity(
-              opacity: 0.1,
-              child: Image.asset(
-                'assets/icons/logo-unpam.png',
-                width: MediaQuery.of(context).size.width * 0.7,
+          // Background logo
+          Positioned.fill(
+            child: Center(
+              child: Opacity(
+                opacity: 0.1,
+                child: Image.asset(
+                  'assets/icons/logo-unpam.png',
+                  width: MediaQuery.of(context).size.width * 0.7,
+                ),
               ),
             ),
           ),
 
-          Builder(
-            builder: (context) {
-              if (showFakeCard) {
-                return _buildReportCard();
-              }
-              
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset('assets/images/image_70.svg'),
-                    const SizedBox(height: 5),
-                    const Text(
-                      'Belum Ada Laporan',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // Main content dengan SafeArea dan padding bottom untuk navbar
+          SafeArea(
+            bottom: true,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 85), // Disesuaikan dengan tinggi navbar
+              child: Builder(
+                builder: (context) {
+                  if (showFakeCard) {
+                    return ListView(
+                      children: [
+                        _buildReportCard(),
+                        // Tambah konten lain di sini jika ada
+                      ],
+                    );
+                  }
+                  
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset('assets/images/image_70.svg'),
+                        const SizedBox(height: 5),
+                        const Text(
+                          'Belum Ada Laporan',
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 3),
+                        const Text(
+                          'Laporkan masalah yang kamu temui \ndi sekitar kampus',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 3),
-                    const Text(
-                      'Laporkan masalah yang kamu temui \ndi sekitar kampus',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
@@ -131,6 +146,7 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           color: ColorConstant.creamCard,
           borderRadius: BorderRadius.circular(12),
+          
         ),
         child: Row(
           children: [
