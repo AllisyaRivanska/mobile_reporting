@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/widgets/custom_back_header.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,50 +19,43 @@ class _ProfilePageState extends State<ProfilePage> {
   String email = "melankolis123@gmail.com";
 
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFE9F2FF),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF2168E3),
-        title: const Text(
-          'Profil Saya',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 65,
-              backgroundColor: const Color(0xFF67B0D1),
-              child: CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage('assets/images/logo-unpam.png'),
-              ),
-            ),
-            const SizedBox(height: 30),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: ColorConstant.creamCard,
+    body: Column(
+      children: [
+        const CustomBackHeader(title: 'Profil Saya'),
 
-            buildProfileField("Nama Lengkap", nama),
-            buildProfileField("Tanggal lahir", tanggalLahir),
-            buildProfileField("NIM", nim),
-            buildProfileField("Program Studi", prodi),
-            buildProfileField("Kelas", kelas),
-            buildProfileField("Email", email),
-          ],
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 65,
+                  backgroundColor: ColorConstant.darkBlue,
+                  child: const CircleAvatar(
+                    radius: 60,
+                    backgroundImage: AssetImage('assets/images/logo-unpam.png'),
+                  ),
+                ),
+                const SizedBox(height: 30),
+
+                buildProfileField("Nama Lengkap", nama),
+                buildProfileField("Tanggal lahir", tanggalLahir),
+                buildProfileField("NIM", nim),
+                buildProfileField("Program Studi", prodi),
+                buildProfileField("Kelas", kelas),
+                buildProfileField("Email", email),
+              ],
+            ),
+          ),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
+}
 
   Widget buildProfileField(String label, String value) {
     return Padding(
@@ -69,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Text(
             label,
-            style: const TextStyle(color: Colors.grey, fontSize: 14),
+            style: TextConfig.inputHint,
           ),
           const SizedBox(height: 5),
           Container(
@@ -82,11 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             child: Text(
               value,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
+              style: TextConfig.logoutButton,
             ),
           ),
         ],
