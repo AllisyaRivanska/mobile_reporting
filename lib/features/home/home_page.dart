@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/features/home/cubit/home_bloc.dart';
 import 'package:mobile_reporting/features/notification/notification_page.dart';
 import 'package:mobile_reporting/features/profile/presentation/profile_menu_page.dart';
-import 'package:mobile_reporting/features/reporting/presentation/detail_page.dart';
+import 'package:mobile_reporting/features/reporting/model/reporting_model.dart';
+import 'package:mobile_reporting/features/reporting/presentation/success_page.dart';
 // import 'package:mobile_reporting/features/home/cubit/home_state.dart';
 // import 'package:mobile_reporting/features/home/model/home_model.dart';
 
@@ -17,6 +19,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   final reportAktif = Data(
+  id: 1,
+  kategori: "Fasilitas",
+  deskripsi: "Lampu Kelas 101 Mati\nsering nyala dan tiba-tiba redup.",
+  status: "Proses",
+  createdAt: "17 Jan 2026",
+);
+
   bool showFakeCard = true;
 
   @override
@@ -27,6 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
@@ -48,15 +59,10 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     Text(
                       'Campus Report',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+                      style: TextConfig.headerHomePage),
                     Text(
                       'Universitas Pamulang',
-                      style: TextStyle(fontSize: 14, color: Colors.white70),
+                      style: TextConfig.subHeaderHomePage,
                     ),
                   ],
                 ),
@@ -116,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                   if (showFakeCard) {
                     return ListView(
                       children: [
-                        _buildReportCard(),
+                        _buildReportCard(reportAktif),
                         // Tambah konten lain di sini jika ada
                       ],
                     );
@@ -130,13 +136,13 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 5),
                         const Text(
                           'Belum Ada Laporan',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextConfig.textIcon,
                         ),
                         const SizedBox(height: 3),
                         const Text(
                           'Laporkan masalah yang kamu temui \ndi sekitar kampus',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 15),
+                          style: TextConfig.subTextIcon,
                         ),
                       ],
                     ),
@@ -150,7 +156,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildReportCard() {
+  Widget _buildReportCard(Data data) {
+    
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -161,6 +168,7 @@ class _HomePageState extends State<HomePage> {
           
         ),
         child: Row(
+          
           children: [
             const Icon(Icons.notifications, color: ColorConstant.primaryColor, size: 30),
             const SizedBox(width: 12),
@@ -168,29 +176,27 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                
+
                 children: [
                   const Text(
                     "Laporanmu (17 Jan 2026) sedang di proses",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextConfig.information,
                   ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
                       const Text(
                         "Diperbarui 2 jam lalu  •  ",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: TextConfig.subInformation,
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SuccessPage(reportData: data)));
                         },
                         child: const Text(
                           "Lihat Detail →",
-                          style: TextStyle(
-                            color: ColorConstant.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                          style: TextConfig.seeDetailHomePage
                         ),
                       ),
                     ],

@@ -1,9 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/constant/widgets/custom_back_header.dart';
+import 'package:mobile_reporting/features/reporting/model/reporting_model.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+  final Data reportData;
+  const DetailPage({super.key, required this.reportData});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -12,6 +16,8 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
+    final String deskripsiLengkap = widget.reportData.deskripsi?.split('\n').last ?? "";
+
     return Scaffold(
       backgroundColor: ColorConstant.lightBlue,
       body: Column(
@@ -35,66 +41,57 @@ class _DetailPageState extends State<DetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "AC kelas 920 gedung B mati",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Text(
+                          " ${widget.reportData.title}", style: TextConfig.textTitle,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 8),
 
-                        _buildInfoRow("Kategori :", "Fasilitas Kampus"),
+                        _buildInfoRow("Kategori", widget.reportData.kategori ?? "-"),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Text("Status : ", style: TextStyle(fontSize: 13)),
+                            const Text("Status : ", style: TextConfig.labelIcon),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               decoration: BoxDecoration(
                                 color: const Color(0xFF3B5B8A),
                                 borderRadius: BorderRadius.circular(6),
                               ),
-                              child: const Text(
-                                "Proses",
-                                style: TextStyle(color: Colors.white, fontSize: 11),
+                              child: Text(widget.reportData.status ?? "Proses", style: TextConfig.status,
                               ),
                             ),
                           ],
                         ),
                         const Divider(height: 30),
 
-                        const Text(
-                          "Tanggal : 17 Jan 2026",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                        Text(
+                          "Tanggal : ${widget.reportData.createdAt}",
+                          style: TextConfig.labelIcon,
                         ),
                         const Divider(height: 30),
-
-                        const Text(
-                          "AC di kelas 920 gedung B tidak berfungsi nih ngab, Tolong di cek dan ditindak yaa soalnya kita sekelas udah kayak deket matahari. Terima kasih.",
-                          style: TextStyle(fontSize: 13, height: 1.5),
+                        Text(
+                          deskripsiLengkap,
+                          style: TextConfig.descriptionCard,
                         ),
                         const SizedBox(height: 16),
 
+                        if(widget.reportData.fotoUrl != null)
+
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/images/victor.png', 
+                          child: Image.file(
+                            File(widget.reportData.fotoUrl!),
                             width: double.infinity,
                             height: 150,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => Container(
-                              height: 150,
-                              color: Colors.grey[200],
-                              child: const Icon(Icons.image, color: Colors.grey),
-                            ),
+                            
                           ),
                         ),
                         const Divider(height: 40),
 
                         const Text(
                           "Riwayat pembaruan",
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextConfig.information,
                         ),
                         const SizedBox(height: 12),
                         _buildTimelineItem("15 Jan 2026", "Laporan Dibuat", isLast: false, color: Colors.orange),
@@ -114,8 +111,8 @@ class _DetailPageState extends State<DetailPage> {
   Widget _buildInfoRow(String label, String value) {
     return Row(
       children: [
-        Text("$label ", style: const TextStyle(fontSize: 13)),
-        Text(value, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400)),
+        Text("$label :", style: TextConfig.labelIcon),
+        Text(value, style: TextConfig.labelIcon),
       ],
     );
   }
@@ -137,12 +134,12 @@ class _DetailPageState extends State<DetailPage> {
         ),
         const SizedBox(width: 12),
         Text(
-          "$date   ",
-          style: const TextStyle(fontSize: 12, color: Colors.black54),
+          "$date  $status ",
+          style: TextConfig.labelIcon,
         ),
         Text(
           status,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          style: TextConfig.labelIcon,
         ),
       ],
     );

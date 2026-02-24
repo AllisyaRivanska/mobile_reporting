@@ -31,6 +31,7 @@ class _ReportingPageState extends State<ReportingPage> {
   bool _isLoading = false; 
   String? _selectedCategory;
   File? _selectedImage;
+  Data? _inputData;
 
   final List<String> _categories = [
     'Fasilitas',
@@ -194,21 +195,36 @@ class _ReportingPageState extends State<ReportingPage> {
   }
 
   void submitForm() {
-    if (titleController.text.isEmpty || _selectedCategory == null || descriptionController.text.isEmpty) {
+    if (titleController.text.isEmpty || _selectedCategory == null || _selectedCategory == 'Lainnya' && otherCategoryController.text.isEmpty || descriptionController.text.isEmpty) {
       _showIncompleteAlert();
       return;
     }
 
-    if (formKey.currentState!.validate()) {
-      String finalCategory = _selectedCategory == 'Lainnya' ? otherCategoryController.text : _selectedCategory ?? '';
-      final reportData = ReportingModel(
-        kategori: finalCategory,
-        deskripsi: descriptionController.text,
-        imagePath: _selectedImage?.path,
-      );
-      context.read<ReportingBloc>().submitReporting(reportData);
-    }
+  if (formKey.currentState!.validate()) {
+    String finalCategory = _selectedCategory == 'Lainnya' ? otherCategoryController.text : _selectedCategory ?? '';
+    _inputData = Data(
+      id: 1,
+      title: titleController.text,
+      kategori: finalCategory,
+      deskripsi: descriptionController.text,
+      fotoUrl: _selectedImage?.path,
+      createdAt: '17 Jan 2026',
+    );
+
+    context.read<ReportingBloc>().submitReporting(_inputData!);
   }
+  }
+  
+    // if (formKey.currentState!.validate()) {
+    //   String finalCategory = _selectedCategory == 'Lainnya' ? otherCategoryController.text : _selectedCategory ?? '';
+    //   final reportData = ReportingModel(
+    //     kategori: finalCategory,
+    //     deskripsi: descriptionController.text,
+    //     imagePath: _selectedImage?.path,
+    //   );
+    //   context.read<ReportingBloc>().submitReporting(reportData);
+    // }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -413,10 +429,13 @@ class _ReportingPageState extends State<ReportingPage> {
           setState(() => _isLoading = true);
         } else if (state is ReportingSubmitSuccess) {
           setState(() => _isLoading = false);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const SuccessPage()),
-          );
+          
+          if (_inputData != null) {
+
+          
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SuccessPage(reportData: _inputData!, showBanner: true),),);
+          }
+
         } else if (state is ReportingError) {
           setState(() => _isLoading = false);
           ScaffoldMessenger.of(context).showSnackBar(

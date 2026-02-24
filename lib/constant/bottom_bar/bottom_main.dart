@@ -44,7 +44,7 @@ class _BottomMainState extends State<BottomMain> {
         clipBehavior: Clip.none,
         children: [
           SizedBox(
-            height: responsive.navBarHeight ,
+            height: responsive.navBarHeight + 3,
             child: ClipPath(
               clipper: BottomNavClipper(),
               child: Container(
@@ -75,7 +75,7 @@ class _BottomMainState extends State<BottomMain> {
                         isSelected: _currentIndex == 0,
                       ),
                     ),
-                    SizedBox(width: responsive.navFabSize + 20,
+                    SizedBox(width: (responsive.navFabSize*2.3) -25,
                     ),
                     Expanded(
                       child: _buildNavItem(
@@ -97,8 +97,8 @@ class _BottomMainState extends State<BottomMain> {
             ),
           ),
           Positioned(
-            top: responsive.navFabTopOffset -3,
-            left: MediaQuery.of(context).size.width / 2 - (responsive.navFabSize / 2),
+            top: responsive.navFabTopOffset -40,
+            left: MediaQuery.of(context).size.width / 2 - ((responsive.navFabSize *2.3)/ 2),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -109,8 +109,8 @@ class _BottomMainState extends State<BottomMain> {
                 );
               },
               child: Container(
-                width: responsive.navFabSize,
-                height: responsive.navFabSize,
+                width: responsive.navFabSize*2.3,
+                height: responsive.navFabSize*2.3,
                 decoration: const BoxDecoration(
                   color: Colors.transparent,
                   shape: BoxShape.circle,
@@ -118,8 +118,8 @@ class _BottomMainState extends State<BottomMain> {
                 child: Center(
                   child: SvgPicture.asset(
                     'assets/icons/icon_add.svg',
-                    width: responsive.navFabIconSize + 45,
-                    height: responsive.navFabIconSize + 45,
+                    width: responsive.navFabIconSize *2.3,
+                    height: responsive.navFabIconSize *2.3,
                     colorFilter: const ColorFilter.mode(
                       ColorConstant.darkBlue,
                       BlendMode.srcIn,

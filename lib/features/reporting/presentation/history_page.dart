@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
 import 'package:mobile_reporting/constant/text_config/text_config.dart';
 import 'package:mobile_reporting/constant/widgets/custom_back_header.dart';
-// import 'package:mobile_reporting/constant/text_config/text_config.dart';
+import 'package:mobile_reporting/features/reporting/cubit/reporting_bloc.dart';
+import 'package:mobile_reporting/features/reporting/cubit/reporting_state.dart';
+import 'package:mobile_reporting/features/reporting/model/reporting_model.dart';
+import 'package:mobile_reporting/features/reporting/presentation/success_page.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+const HistoryPage({super.key});
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -15,7 +19,6 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
-    bool isEmpty = false; 
 
     return Scaffold(
       backgroundColor: ColorConstant.lightBlue,
@@ -24,53 +27,88 @@ class _HistoryPageState extends State<HistoryPage> {
           CustomBackHeader(title: 'Riwayat Laporan', backIcon: false),
           
           Expanded(
-            child: isEmpty 
-      ? _buildEmptyState() 
-      : _buildHistoryList(),
+            child: BlocBuilder<ReportingBloc, ReportingState>(builder: (context, state) {
+              if (state is ReportingFetchSuccess) {
+                final listLaporan = state.reporting;
+
+                if (listLaporan.isEmpty) {
+                  return _buildEmptyState();
+                }
+
+                return _buildHistoryList(listLaporan);
+              }
+              if (state is ReportingLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return _buildEmptyState();
+            }
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildHistoryList() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: 3, 
-      itemBuilder: (context, index) {
-        List<String> statuses = ['Pending', 'Proses', 'Selesai'];
-        List<Color> statusColors = [Colors.orangeAccent, Colors.blue.shade900, Colors.green];
+ Widget _buildHistoryList(List<Data> listLaporan) {
+  return ListView.builder(
+    padding: const EdgeInsets.all(16),
+    itemCount: listLaporan.length,
+    itemBuilder: (context, index) {
+      final item = listLaporan[index];
 
-        return Card(
+      Color statusColor;
+      switch (item.status?.toLowerCase()) {
+        case 'pending': statusColor = ColorConstant.mediumYellow;
+          break;
+        case 'proses': statusColor = ColorConstant.primaryColor;
+          break;
+        case 'selesai': statusColor = ColorConstant.darkGreen;
+          break;
+        default:
+          statusColor = Colors.grey;
+      }
+
+      return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SuccessPage(reportData: item)),
+          );
+        },
+        child: Card(
           elevation: 0,
           margin: const EdgeInsets.only(bottom: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Colors.grey,
-          width: 1)),
-
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: Colors.grey, width: 1),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'AC kelas 920 gedung B mati',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                Text(
+                  item.title ?? "Tanpa Judul", 
+                  style: TextConfig.textTitle,
                 ),
                 const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('17 Jan 2026', style: TextConfig.subInformation),
+                    Text(
+                      item.createdAt ?? "-", 
+                      style: TextConfig.subInformation
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       decoration: BoxDecoration(
-                        color: statusColors[index],
+                        color: statusColor, 
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Text(
-                        statuses[index],
-                        style: TextConfig.status
+                        item.status ?? "Pending",
+                        style: TextConfig.status,
                       ),
                     ),
                   ],
@@ -78,10 +116,11 @@ class _HistoryPageState extends State<HistoryPage> {
               ],
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
   Widget _buildEmptyState() {
     return Center(

@@ -31,6 +31,7 @@ class ReportingModel {
 class Data {
   int? id;
   int? userId;
+  String? title;
   String? kategori;
   String? deskripsi;
   String? fotoUrl;
@@ -43,6 +44,7 @@ class Data {
   Data(
       {this.id,
       this.userId,
+      this.title,
       this.kategori,
       this.deskripsi,
       this.fotoUrl,
@@ -55,6 +57,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
+    title = json['title'] ?? ''; //pakai null safety supaya tidak crashh
     kategori = json['kategori'];
     deskripsi = json['deskripsi'];
     fotoUrl = json['foto_url']?.toString(); //convert to string jd avoid error saat API kirim link gambar
@@ -69,6 +72,7 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['user_id'] = userId;
+    data['title'] = title;
     data['kategori'] = kategori;
     data['deskripsi'] = deskripsi;
     data['foto_url'] = fotoUrl;

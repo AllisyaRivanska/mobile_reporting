@@ -104,4 +104,6 @@ class TextConfig {
 
   static const TextStyle snackBarMessage = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const TextStyle snackBarSubMessage = TextStyle(fontSize: 12);
+  static const TextStyle textTitle = TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
+  static const TextStyle descriptionCard = TextStyle(fontSize: 13, height: 1.5);
 }
