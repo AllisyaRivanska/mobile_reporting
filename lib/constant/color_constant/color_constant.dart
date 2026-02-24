@@ -15,5 +15,4 @@ class ColorConstant {
   static const Color hintGrey = Color(0xFF9E9E9E);
   static const Color cameraColor = Color(0xFFD6E4FF);
   static const Color backgroundTransparent = Color(0x80000000);
-
 }

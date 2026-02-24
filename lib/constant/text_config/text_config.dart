@@ -104,4 +104,66 @@ class TextConfig {
 
   static const TextStyle snackBarMessage = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const TextStyle snackBarSubMessage = TextStyle(fontSize: 12);
+
+  static const TextStyle notificationText = TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    );
+  
+  static const TextStyle notificationStatus = TextStyle(
+    fontSize: 14,
+    color: Colors.grey,
+    fontWeight: FontWeight.w500
+    );
+  
+  static const TextStyle notificationTitle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.black87,
+    );
+  
+  static const TextStyle notificationSubtitle = TextStyle(
+    fontSize: 13,
+    color: ColorConstant.hintGrey,
+    overflow: TextOverflow.ellipsis,
+    );
+
+  static const TextStyle passwordStatus = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    );
+   
+  static const TextStyle savePassword = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    );
+  
+  static const TextStyle dontSavePassword = TextStyle(
+    color: Colors.black, 
+    fontWeight: FontWeight.w600
+    );
+
+  static const TextStyle updatePassword = TextStyle(
+    fontSize: 14, 
+    color: Colors.black87
+    );
+
+  static const TextStyle helpSubtitle = TextStyle(
+    fontSize: 12,
+    color: ColorConstant.hintGrey,
+    height: 1.3
+    );
+
+  static const TextStyle profileData = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.black87
+  );
+
+  static const TextStyle logoutButton = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: Colors.black87,
+  );
 }
