@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_reporting/features/login/presentation/login_page.dart';
+import 'package:mobile_reporting/constant/text_config/text_config.dart';
+import 'package:mobile_reporting/constant/color_constant/color_constant.dart';
+import 'package:mobile_reporting/constant/widgets/custom_back_header.dart';
+
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
@@ -20,15 +24,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     confirmPasswordController.dispose();
     super.dispose();
   }
+
   void _showSuccessDialog() {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (context) {
         return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.topCenter,
@@ -42,18 +45,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Berhasil!!',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    const Text('Berhasil!!', style: TextConfig.passwordStatus),
                     const SizedBox(height: 8),
                     const Text(
                       'Password anda telah terupdate',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: Colors.black87),
+                      style: TextConfig.updatePassword,
                     ),
                     const SizedBox(height: 20),
                     SizedBox(
@@ -63,38 +60,28 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           Navigator.pop(context);
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => const LoginPage()),
+                            MaterialPageRoute(builder: (_) => const LoginPage()),
                             (route) => false,
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD35D5D),
+                          backgroundColor: ColorConstant.warningButton,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'Oke',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                        child: const Text('Oke', style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ],
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: -30,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF27AE60),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: 40,
-                  ),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: ColorConstant.darkGreen,
+                  child: Icon(Icons.check, color: Colors.white, size: 30),
                 ),
               ),
             ],
@@ -107,84 +94,91 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F5FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF2168E3),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Ganti Kata Sandi',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          children: [
-            _passwordField(
-              controller: newPasswordController,
-              hint: 'Kata Sandi Baru',
-              obscure: obscureNewPassword,
-              onToggle: () => setState(() => obscureNewPassword = !obscureNewPassword),
-            ),
-            const SizedBox(height: 12),
-            _passwordField(
-              controller: confirmPasswordController,
-              hint: 'Konfirmasi Kata Sandi',
-              obscure: obscureConfirmPassword,
-              onToggle: () => setState(() => obscureConfirmPassword = !obscureConfirmPassword),
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (newPasswordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Harap isi semua kolom!")),
-                    );
-                  } else if (newPasswordController.text != confirmPasswordController.text) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Konfirmasi password tidak cocok!")),
-                    );
-                  } else {
-                    _showSuccessDialog();
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2168E3),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                child: const Text(
-                  'Simpan Perubahan',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
-                ),
+      backgroundColor: ColorConstant.creamCard,
+      body: Column(
+        children: [
+          CustomBackHeader(
+            title: 'Ganti Kata Sandi',
+            onBack: () => Navigator.pop(context),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Column(
+                children: [
+                  _passwordField(
+                    controller: newPasswordController,
+                    hint: 'Kata Sandi Baru',
+                    obscure: obscureNewPassword,
+                    onToggle: () =>
+                        setState(() => obscureNewPassword = !obscureNewPassword),
+                  ),
+                  const SizedBox(height: 12),
+                  _passwordField(
+                    controller: confirmPasswordController,
+                    hint: 'Konfirmasi Kata Sandi',
+                    obscure: obscureConfirmPassword,
+                    onToggle: () =>
+                        setState(() => obscureConfirmPassword = !obscureConfirmPassword),
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (newPasswordController.text.isEmpty ||
+                            confirmPasswordController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Harap isi semua kolom!")),
+                          );
+                        } else if (newPasswordController.text !=
+                            confirmPasswordController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Konfirmasi password tidak cocok!")),
+                          );
+                        } else {
+                          _showSuccessDialog();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorConstant.primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        'Simpan Perubahan',
+                        style: TextConfig.savePassword,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: ColorConstant.lightBlue,
+                        side: const BorderSide(
+                            color: ColorConstant.primaryColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        'Batal',
+                        style: TextConfig.dontSavePassword,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: OutlinedButton(
-                onPressed: () => Navigator.pop(context),
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xFFEAF1FF),
-                  side: const BorderSide(color: Color(0xFF2168E3)),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                child: const Text(
-                  'Batal',
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -198,7 +192,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFE0E3E8),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
@@ -210,7 +204,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           suffixIcon: IconButton(
             icon: Icon(
               obscure ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
+              color: ColorConstant.hintGrey,
             ),
             onPressed: onToggle,
           ),
